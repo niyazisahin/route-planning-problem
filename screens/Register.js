@@ -1,7 +1,11 @@
 import * as React from 'react';
 import { StyleSheet, TextInput, View, Text, Alert, TouchableOpacity } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
+
 export default function Register() {
+
+  const navigation = useNavigation();
 
   const [post, setPost] = React.useState({
     username: "",
@@ -25,7 +29,9 @@ export default function Register() {
         onChangeText={value => setPost({ ...post, password: value })}
       />
 
-      <TouchableOpacity style={styles.registerBtn} onPress={() => Alert.alert("Kayıt Ol tuşuna bastınız.")}>
+
+
+      <TouchableOpacity style={styles.registerBtn} onPress={() => navigation.navigate("User_login")}>
         <Text >Kayıt Ol</Text>
       </TouchableOpacity>
 

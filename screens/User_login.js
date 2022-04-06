@@ -11,9 +11,10 @@ export default function User_login() {
     password: ""
   })
 
+
   return (
     <View style={styles.container}>
-        <Text>Kullanıcı Giriş Paneli</Text>
+      <Text>Kullanıcı Giriş Paneli</Text>
       {<TextInput
         style={styles.input}
         value={setPost.username}
@@ -28,11 +29,23 @@ export default function User_login() {
         onChangeText={value => setPost({ ...post, password: value })}
       />
 
-<TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate("User_index", {
-                content: post
-            })}>
-                <Text >Giriş Yap</Text>
-            </TouchableOpacity>
+      <TouchableOpacity style={styles.loginBtn} onPress={() => {
+        fetch('http://127.0.0.1:5000/api/v1/', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            "username": post.username,
+            "password": post.password
+          })
+        }).then(response => {
+          response.text().then(function (text) { alert(text) })
+        })
+      }}>
+        <Text >Giriş Yap</Text>
+      </TouchableOpacity>
 
       <TouchableOpacity style={styles.registerBtn} onPress={() => Alert.alert("Kayıt Ol tuşuna bastınız."), () => navigation.navigate("Register")}>
         <Text >Kayıt Ol</Text>
