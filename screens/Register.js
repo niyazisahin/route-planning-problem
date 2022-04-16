@@ -8,6 +8,8 @@ export default function Register() {
   const navigation = useNavigation();
 
   const [post, setPost] = React.useState({
+    first_name: "",
+    surname: "",
     username: "",
     password: ""
   })
@@ -15,12 +17,26 @@ export default function Register() {
   return (
     <View style={styles.container}>
       <Text>Kayıt Paneli</Text>
-      {<TextInput
+      <TextInput
+        style={styles.input}
+        value={setPost.first_name}
+        placeholder="Name"
+        onChangeText={value => setPost({ ...post, first_name: value })}
+      />
+
+      <TextInput
+        style={styles.input}
+        value={setPost.surname}
+        placeholder="Surname"
+        onChangeText={value => setPost({ ...post, surname: value })}
+      />
+
+      <TextInput
         style={styles.input}
         value={setPost.username}
         placeholder="Username"
         onChangeText={value => setPost({ ...post, username: value })}
-      />}
+      />
 
       <TextInput secureTextEntry={true}
         style={styles.input}
@@ -29,9 +45,31 @@ export default function Register() {
         onChangeText={value => setPost({ ...post, password: value })}
       />
 
+      <TouchableOpacity style={styles.loginBtn} onPress={() => {
+        fetch('http://127.0.0.1:5000/api/v2/', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            "name": post.first_name,
+            "surname": post.surname,
+            "username": post.username,
+            "password": post.password
+          })
+        }).then(response => {
+          response.text().then(function (text) {
+            alert("Giriş Sayfasına Yönlendiriliyorsunuz")
+            if (text == "True") {
+              navigation.navigate("User_login", { content: post })
+            }
+          })
 
 
-      <TouchableOpacity style={styles.registerBtn} onPress={() => navigation.navigate("User_login")}>
+
+        })
+      }}>
         <Text >Kayıt Ol</Text>
       </TouchableOpacity>
 
@@ -80,4 +118,4 @@ const styles = StyleSheet.create({
 
 
 });
- 
+

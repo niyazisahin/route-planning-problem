@@ -41,7 +41,14 @@ export default function User_login() {
             "password": post.password
           })
         }).then(response => {
-          response.text().then(function (text) { alert(text) })
+          response.text().then(function (text) { alert(text) 
+            if(text == "True"){
+              
+              navigation.navigate("User_index", {content:post} )
+            } })
+          
+          
+          
         })
       }}>
         <Text >Giriş Yap</Text>

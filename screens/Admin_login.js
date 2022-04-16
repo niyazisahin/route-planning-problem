@@ -27,11 +27,30 @@ export default function Admin_login() {
                 onChangeText={value => setPost({ ...post, password: value })}
             />
 
-            <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate("Admin_index", {
-                content: post
-            })}>
-                <Text >Giriş Yap</Text>
-            </TouchableOpacity>
+<TouchableOpacity style={styles.loginBtn} onPress={() => {
+        fetch('http://127.0.0.1:5000/api/v3/', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            "username": post.username,
+            "password": post.password
+          })
+        }).then(response => {
+          response.text().then(function (text) { alert(text) 
+            if(text == "True"){
+              
+              navigation.navigate("Admin_index", {content:post} )
+            } })
+          
+          
+          
+        })
+      }}>
+        <Text >Giriş Yap</Text>
+      </TouchableOpacity>
 
         </View>
     );
