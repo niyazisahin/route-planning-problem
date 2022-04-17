@@ -2,113 +2,207 @@ import * as React from 'react';
 import { StyleSheet, TextInput, View, Text, Alert, TouchableOpacity } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
+import NumericInput from 'react-native-numeric-input'
 
 export default function Admin_rota_ekle() {
 
     const navigation = useNavigation();
 
     const [post, setPost] = React.useState({
-        cayirova: "",
-        gebze: "",
-        darica: "",
-        korfez: "",
-        derince: "",
-        kandira: "",
-        karamursel: "",
-        golcuk: "",
-        izmit: "",
-        kartepe: "",
-        basiskele: "",
-        dilovasi: ""
+        dict : {
+            "cayirova": 0,
+            "gebze": 0,
+            "darica": 0,
+            "korfez": 0,
+            "derince": 0,
+            "kandira": 0,
+            "karamursel": 0,
+            "golcuk": 0,
+            "izmit": 0,
+            "kartepe": 0,
+            "basiskele": 0,
+            "dilovasi": 0
+        }
     })
 
     return (
         <View style={styles.container}>
 
-            
-            <Text>Yeni Rota Ekle</Text>
-            <TextInput
-                style={styles.input}
-                value={setPost.cayirova}
-                keyboardType='numeric'
-                placeholder="asdasd"
-                onChangeText={value => setPost({ ...post, cayirova: value })}
-            />
+            <Text>Çayırova</Text>
+            <NumericInput
+                onChange={value => setPost({ ...post,})}
+                onLimitReached={(isMax, msg) => console.log(isMax, msg)}
+                totalWidth={200}
+                totalHeight={30}
+                iconSize={25}
+                step={1}
+                valueType='real'
+                rounded
+                textColor='#B0228C'
+                iconStyle={{ color: 'white' }}
+                rightButtonBackgroundColor='#fb5b5a'
+                leftButtonBackgroundColor='#26E1ED' />
 
-            <TextInput
-                style={styles.input}
-                value={setPost.gebze}
-                placeholder=""
-                onChangeText={value => setPost({ ...post, gebze: value })}
-            />
+            <Text>Gebze</Text>
+            <NumericInput
+                onChange={value => setPost({ ...post,})}
+                onLimitReached={(isMax, msg) => console.log(isMax, msg)}
+                totalWidth={200}
+                totalHeight={30}
+                iconSize={25}
+                step={1}
+                valueType='real'
+                rounded
+                textColor='#B0228C'
+                iconStyle={{ color: 'white' }}
+                rightButtonBackgroundColor='#fb5b5a'
+                leftButtonBackgroundColor='#26E1ED' />
+            <Text>Darıca</Text>
+            <NumericInput
+                onChange={value => setPost({ ...post,})}
+                onLimitReached={(isMax, msg) => console.log(isMax, msg)}
+                totalWidth={200}
+                totalHeight={30}
+                iconSize={25}
+                step={1}
+                valueType='real'
+                rounded
+                textColor='#B0228C'
+                iconStyle={{ color: 'white' }}
+                rightButtonBackgroundColor='#fb5b5a'
+                leftButtonBackgroundColor='#26E1ED' />
 
-            <TextInput
-                style={styles.input}
-                value={setPost.darica}
-                placeholder=""
-                onChangeText={value => setPost({ ...post, darica: value })}
-            />
+            <Text>Körfez</Text>
+            <NumericInput
+                onChange={value => setPost({ ...post,})}
+                onLimitReached={(isMax, msg) => console.log(isMax, msg)}
+                totalWidth={200}
+                totalHeight={30}
+                iconSize={25}
+                step={1}
+                valueType='real'
+                rounded
+                textColor='#B0228C'
+                iconStyle={{ color: 'white' }}
+                rightButtonBackgroundColor='#fb5b5a'
+                leftButtonBackgroundColor='#26E1ED' />
+            <Text>Derince</Text>
+            <NumericInput
+                onChange={value => setPost({ ...post, cayirova: value })}
+                onLimitReached={(isMax, msg) => console.log(isMax, msg)}
+                totalWidth={200}
+                totalHeight={30}
+                iconSize={25}
+                step={1}
+                valueType='real'
+                rounded
+                textColor='#B0228C'
+                iconStyle={{ color: 'white' }}
+                rightButtonBackgroundColor='#fb5b5a'
+                leftButtonBackgroundColor='#26E1ED' />
 
-            <TextInput
-                style={styles.input}
-                value={setPost.korfez}
-                placeholder=""
-                onChangeText={value => setPost({ ...post, korfez: value })}
-            />
-            <TextInput
-                style={styles.input}
-                value={setPost.derince}
-                placeholder=""
-                onChangeText={value => setPost({ ...post, derince: value })}
-            />
+            <Text>İzmit</Text>
+            <NumericInput
+                onChange={value => setPost({ ...post,})}
+                onLimitReached={(isMax, msg) => console.log(isMax, msg)}
+                totalWidth={200}
+                totalHeight={30}
+                iconSize={25}
+                step={1}
+                valueType='real'
+                rounded
+                textColor='#B0228C'
+                iconStyle={{ color: 'white' }}
+                rightButtonBackgroundColor='#fb5b5a'
+                leftButtonBackgroundColor='#26E1ED' />
+            <Text>Başiskele</Text>
+            <NumericInput
+                onChange={value => setPost({ ...post,})}
+                onLimitReached={(isMax, msg) => console.log(isMax, msg)}
+                totalWidth={200}
+                totalHeight={30}
+                iconSize={25}
+                step={1}
+                valueType='real'
+                rounded
+                textColor='#B0228C'
+                iconStyle={{ color: 'white' }}
+                rightButtonBackgroundColor='#fb5b5a'
+                leftButtonBackgroundColor='#26E1ED' />
 
-            <TextInput
-                style={styles.input}
-                value={setPost.kandira}
-                placeholder=""
-                onChangeText={value => setPost({ ...post, kandira: value })}
-            />
+            <Text>Dilovası</Text>
+            <NumericInput
+                onChange={value => setPost({ ...post,})}
+                onLimitReached={(isMax, msg) => console.log(isMax, msg)}
+                totalWidth={200}
+                totalHeight={30}
+                iconSize={25}
+                step={1}
+                valueType='real'
+                rounded
+                textColor='#B0228C'
+                iconStyle={{ color: 'white' }}
+                rightButtonBackgroundColor='#fb5b5a'
+                leftButtonBackgroundColor='#26E1ED' />
+            <Text>Karamürsel</Text>
+            <NumericInput
+                onChange={value => setPost({ ...post,})}
+                onLimitReached={(isMax, msg) => console.log(isMax, msg)}
+                totalWidth={200}
+                totalHeight={30}
+                iconSize={25}
+                step={1}
+                valueType='real'
+                rounded
+                textColor='#B0228C'
+                iconStyle={{ color: 'white' }}
+                rightButtonBackgroundColor='#fb5b5a'
+                leftButtonBackgroundColor='#26E1ED' />
 
-            <TextInput
-                style={styles.input}
-                value={setPost.karamursel}
-                placeholder=""
-                onChangeText={value => setPost({ ...post, karamursel: value })}
-            />
+            <Text>Kandıra</Text>
+            <NumericInput
+                onChange={value => setPost({ ...post, })}
+                onLimitReached={(isMax, msg) => console.log(isMax, msg)}
+                totalWidth={200}
+                totalHeight={30}
+                iconSize={25}
+                step={1}
+                valueType='real'
+                rounded
+                textColor='#B0228C'
+                iconStyle={{ color: 'white' }}
+                rightButtonBackgroundColor='#fb5b5a'
+                leftButtonBackgroundColor='#26E1ED' />
+                            <Text>Kartepe</Text>
+            <NumericInput
+                onChange={value => setPost({ ...post, })}
+                onLimitReached={(isMax, msg) => console.log(isMax, msg)}
+                totalWidth={200}
+                totalHeight={30}
+                iconSize={25}
+                step={1}
+                valueType='real'
+                rounded
+                textColor='#B0228C'
+                iconStyle={{ color: 'white' }}
+                rightButtonBackgroundColor='#fb5b5a'
+                leftButtonBackgroundColor='#26E1ED' />
+                            <Text>Gölcük</Text>
+            <NumericInput
+                onChange={value => setPost({ ...post, })}
+                onLimitReached={(isMax, msg) => console.log(isMax, msg)}
+                totalWidth={200}
+                totalHeight={30}
+                iconSize={25}
+                step={1}
+                valueType='real'
+                rounded
+                textColor='#B0228C'
+                iconStyle={{ color: 'white' }}
+                rightButtonBackgroundColor='#fb5b5a'
+                leftButtonBackgroundColor='#26E1ED' />
 
-            <TextInput
-                style={styles.input}
-                value={setPost.golcuk}
-                placeholder=""
-                onChangeText={value => setPost({ ...post, golcuk: value })}
-            />
-            <TextInput
-                style={styles.input}
-                value={setPost.izmit}
-                placeholder=""
-                onChangeText={value => setPost({ ...post, izmit: value })}
-            />
 
-            <TextInput
-                style={styles.input}
-                value={setPost.basiskele}
-                placeholder=""
-                onChangeText={value => setPost({ ...post, basiskele: value })}
-            />
-
-            <TextInput
-                style={styles.input}
-                value={setPost.kartepe}
-                placeholder=""
-                onChangeText={value => setPost({ ...post, karamursel: value })}
-            />
-
-            <TextInput
-                style={styles.input}
-                value={setPost.dilovasi}
-                placeholder=""
-                onChangeText={value => setPost({ ...post, dilovasi: value })}
-            />
 
             <TouchableOpacity style={styles.loginBtn} onPress={() => {
                 fetch('http://127.0.0.1:5000/api/v2/', {
@@ -127,7 +221,7 @@ export default function Admin_rota_ekle() {
                     response.text().then(function (text) {
                         alert("Giriş Sayfasına Yönlendiriliyorsunuz")
                         if (text == "True") {
-                            navigation.navigate("User_login", { content: post })
+                            navigation.navigate("Admin_index", { content: post })
                         }
                     })
 
@@ -135,7 +229,7 @@ export default function Admin_rota_ekle() {
 
                 })
             }}>
-                <Text >Kayıt Ol</Text>
+                <Text >Ekle</Text>
             </TouchableOpacity>
 
         </View>
