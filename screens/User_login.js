@@ -43,8 +43,11 @@ export default function User_login() {
         }).then(response => {
           response.text().then(function (text) { alert(text) 
             if(text == "True"){
+              alert("giriş başarılı")
+              navigation.navigate("User_transition", {content:post} )
               
-              navigation.navigate("User_index", {content:post} )
+            }else{
+              alert("ggireemdi")
             } })
           
           
@@ -54,7 +57,7 @@ export default function User_login() {
         <Text >Giriş Yap</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.registerBtn} onPress={() => Alert.alert("Kayıt Ol tuşuna bastınız."), () => navigation.navigate("Register")}>
+      <TouchableOpacity style={styles.registerBtn} onPress={() => navigation.navigate("Register")}>
         <Text >Kayıt Ol</Text>
       </TouchableOpacity>
 

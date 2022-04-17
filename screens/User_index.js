@@ -6,6 +6,7 @@ import * as Location from "expo-location";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 const { width, height } = Dimensions.get("screen");
+var flag = true
 
 const App = (props) => {
   const town = {
@@ -28,26 +29,31 @@ const App = (props) => {
   const [post, setPost] = React.useState({
     data: {}
   })
-
-  fetch('http://127.0.0.1:5000/api/v5/', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    }
-  })
-    .then(response => (
-      response.json())
-    ).then(data => {
-
-      tmp = {}
-
-      var dict = data["path"].bus0
-
-      setPost({ ...post, data: dict })
-
-      alert(JSON.stringify(dict));
+  
+  if(flag == true){
+    fetch('http://127.0.0.1:5000/api/v5/', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
     })
+      .then(response => (
+        response.json())
+      ).then(data => {
+  
+        tmp = {}
+  
+        var dict = data["path"].bus0
+  
+        setPost({ ...post, data: dict })
+        alert(JSON.stringify(dict))
+      })
+      flag = false
+  }
+
+
+
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [mapRegion, setMapRegion] = useState(null);
@@ -83,7 +89,7 @@ const App = (props) => {
 
   useEffect(() => {
     (async () => {
-      let { status } = await Location.requestPermissionsAsync();
+      let { status } = await Location.requestBackgroundPermissionsAsync();
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
       }

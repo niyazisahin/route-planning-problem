@@ -9,6 +9,7 @@ database = client["RoutePlanningProblem"]
 collection = database["User"]
 collection_admin = database["Admin"]
 collection_path = database["Path"]
+collection_scenario = database["Scenario"]
 
 app = Flask(__name__)
 
@@ -86,6 +87,51 @@ def json_al():
         #print(json_sorted)
         json = dumps(list(json_not_sorted)[-1])
         return json
+    except:
+        print("hatayla karşılaşıldı.")
+        return "False"
+
+# Veri Eklenmesi (json aktarımı)
+@app.route('/api/v6/', methods=['POST', 'GET'])
+def json_gonder_veri():
+
+    request_json = request.get_json()
+    print(request_json)
+    users = collection.find()
+    try:
+        collection_scenario.insert_one({"scenario" : request_json, "users" : {u["username"]:u["loc"] for u in users}})
+        return "True"
+    except:
+        print("hatayla karşılaşıldı.")
+        return "False"
+
+# Veri Çekimi (json çekimi)
+@app.route('/api/v7/', methods=['POST', 'GET'])
+def json_al_veri():
+    
+    try:
+        #json_sorted = collection_path.find().sort({'_id':-1}).limit(1)
+        scenario = collection_scenario.find()
+       
+        #print(json_sorted)
+        json = dumps(list(scenario)[-1])
+        return json
+
+    except:
+        print("hatayla karşılaşıldı.")
+        return "False"
+
+# lokasyon kayıt işlemi
+@app.route('/api/v8/', methods=['POST', 'GET'])
+def loc():
+    request_json = request.get_json()
+    print(request_json)
+    
+    try:                        
+        collection.find_one_and_update({"username": request_json["username"]}, {"$set": {"loc": request_json['loc']}})
+        
+        return "True"
+
     except:
         print("hatayla karşılaşıldı.")
         return "False"

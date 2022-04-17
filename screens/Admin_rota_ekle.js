@@ -9,20 +9,20 @@ export default function Admin_rota_ekle() {
     const navigation = useNavigation();
 
     const [post, setPost] = React.useState({
-        dict : {
-            "cayirova": 0,
-            "gebze": 0,
-            "darica": 0,
-            "korfez": 0,
-            "derince": 0,
-            "kandira": 0,
-            "karamursel": 0,
-            "golcuk": 0,
-            "izmit": 0,
-            "kartepe": 0,
-            "basiskele": 0,
-            "dilovasi": 0
-        }
+
+        "Çayırova": 0,
+        "Gebze": 0,
+        "Darıca": 0,
+        "Körfez": 0,
+        "Derince": 0,
+        "Kandıra": 0,
+        "Karamürsel": 0,
+        "Gölcük": 0,
+        "İzmit": 0,
+        "Kartepe": 0,
+        "Başiskele": 0,
+        "Dilovası": 0
+
     })
 
     return (
@@ -30,7 +30,7 @@ export default function Admin_rota_ekle() {
 
             <Text>Çayırova</Text>
             <NumericInput
-                onChange={value => setPost({ ...post,})}
+                onChange={value => setPost({ ...post, "Çayırova": value })}
                 onLimitReached={(isMax, msg) => console.log(isMax, msg)}
                 totalWidth={200}
                 totalHeight={30}
@@ -45,7 +45,7 @@ export default function Admin_rota_ekle() {
 
             <Text>Gebze</Text>
             <NumericInput
-                onChange={value => setPost({ ...post,})}
+                onChange={value => setPost({ ...post, "Gebze": value })}
                 onLimitReached={(isMax, msg) => console.log(isMax, msg)}
                 totalWidth={200}
                 totalHeight={30}
@@ -59,7 +59,7 @@ export default function Admin_rota_ekle() {
                 leftButtonBackgroundColor='#26E1ED' />
             <Text>Darıca</Text>
             <NumericInput
-                onChange={value => setPost({ ...post,})}
+                onChange={value => setPost({ ...post, "Darıca": value })}
                 onLimitReached={(isMax, msg) => console.log(isMax, msg)}
                 totalWidth={200}
                 totalHeight={30}
@@ -74,7 +74,7 @@ export default function Admin_rota_ekle() {
 
             <Text>Körfez</Text>
             <NumericInput
-                onChange={value => setPost({ ...post,})}
+                onChange={value => setPost({ ...post, "Körfez": value })}
                 onLimitReached={(isMax, msg) => console.log(isMax, msg)}
                 totalWidth={200}
                 totalHeight={30}
@@ -88,7 +88,7 @@ export default function Admin_rota_ekle() {
                 leftButtonBackgroundColor='#26E1ED' />
             <Text>Derince</Text>
             <NumericInput
-                onChange={value => setPost({ ...post, cayirova: value })}
+                onChange={value => setPost({ ...post, "Derince": value })}
                 onLimitReached={(isMax, msg) => console.log(isMax, msg)}
                 totalWidth={200}
                 totalHeight={30}
@@ -103,7 +103,7 @@ export default function Admin_rota_ekle() {
 
             <Text>İzmit</Text>
             <NumericInput
-                onChange={value => setPost({ ...post,})}
+                onChange={value => setPost({ ...post, "İzmit": value })}
                 onLimitReached={(isMax, msg) => console.log(isMax, msg)}
                 totalWidth={200}
                 totalHeight={30}
@@ -117,7 +117,7 @@ export default function Admin_rota_ekle() {
                 leftButtonBackgroundColor='#26E1ED' />
             <Text>Başiskele</Text>
             <NumericInput
-                onChange={value => setPost({ ...post,})}
+                onChange={value => setPost({ ...post, "Başiskele": value })}
                 onLimitReached={(isMax, msg) => console.log(isMax, msg)}
                 totalWidth={200}
                 totalHeight={30}
@@ -132,7 +132,7 @@ export default function Admin_rota_ekle() {
 
             <Text>Dilovası</Text>
             <NumericInput
-                onChange={value => setPost({ ...post,})}
+                onChange={value => setPost({ ...post, "Dilovası": value })}
                 onLimitReached={(isMax, msg) => console.log(isMax, msg)}
                 totalWidth={200}
                 totalHeight={30}
@@ -146,7 +146,7 @@ export default function Admin_rota_ekle() {
                 leftButtonBackgroundColor='#26E1ED' />
             <Text>Karamürsel</Text>
             <NumericInput
-                onChange={value => setPost({ ...post,})}
+                onChange={value => setPost({ ...post, "Karamürsel": value })}
                 onLimitReached={(isMax, msg) => console.log(isMax, msg)}
                 totalWidth={200}
                 totalHeight={30}
@@ -161,7 +161,7 @@ export default function Admin_rota_ekle() {
 
             <Text>Kandıra</Text>
             <NumericInput
-                onChange={value => setPost({ ...post, })}
+                onChange={value => setPost({ ...post, "Kandıra": value })}
                 onLimitReached={(isMax, msg) => console.log(isMax, msg)}
                 totalWidth={200}
                 totalHeight={30}
@@ -173,9 +173,9 @@ export default function Admin_rota_ekle() {
                 iconStyle={{ color: 'white' }}
                 rightButtonBackgroundColor='#fb5b5a'
                 leftButtonBackgroundColor='#26E1ED' />
-                            <Text>Kartepe</Text>
+            <Text>Kartepe</Text>
             <NumericInput
-                onChange={value => setPost({ ...post, })}
+                onChange={value => setPost({ ...post, "Kartepe": value })}
                 onLimitReached={(isMax, msg) => console.log(isMax, msg)}
                 totalWidth={200}
                 totalHeight={30}
@@ -187,9 +187,9 @@ export default function Admin_rota_ekle() {
                 iconStyle={{ color: 'white' }}
                 rightButtonBackgroundColor='#fb5b5a'
                 leftButtonBackgroundColor='#26E1ED' />
-                            <Text>Gölcük</Text>
+            <Text>Gölcük</Text>
             <NumericInput
-                onChange={value => setPost({ ...post, })}
+                onChange={value => setPost({ ...post, "Gölcük": value })}
                 onLimitReached={(isMax, msg) => console.log(isMax, msg)}
                 totalWidth={200}
                 totalHeight={30}
@@ -205,33 +205,29 @@ export default function Admin_rota_ekle() {
 
 
             <TouchableOpacity style={styles.loginBtn} onPress={() => {
-                fetch('http://127.0.0.1:5000/api/v2/', {
+                fetch('http://127.0.0.1:5000/api/v6/', {
                     method: 'POST',
                     headers: {
                         Accept: 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({
-                        "name": post.first_name,
-                        "surname": post.surname,
-                        "username": post.username,
-                        "password": post.password
-                    })
+                    body: JSON.stringify(post)
+
                 }).then(response => {
                     response.text().then(function (text) {
-                        alert("Giriş Sayfasına Yönlendiriliyorsunuz")
+
                         if (text == "True") {
+                            alert("Veriler Gönderildi.. \n Admin Paneline YÖnlendiriliyorsunuz")
                             navigation.navigate("Admin_index", { content: post })
                         }
+                        else {
+                            alert("Veri Gönderme İşlemi Başarısız")
+                        }
                     })
-
-
-
                 })
             }}>
                 <Text >Ekle</Text>
             </TouchableOpacity>
-
         </View>
     );
 }

@@ -1,11 +1,9 @@
 
 import * as React from 'react';
+import { useEffect, useState } from "react";
 import { StyleSheet, TextInput, View, Button, Text, Alert, TouchableOpacity } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
-
-
-
 
 export default function Start() {
     const navigation = useNavigation();

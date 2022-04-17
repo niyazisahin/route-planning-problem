@@ -6,35 +6,34 @@ from random import choice, randint, seed
 from collections import namedtuple
 from datetime import datetime
 
-seed(datetime.now())
 
-senaryo1 = {
-    'Başiskele': 10,
-    'Çayırova': 5,
-    'Darıca': 20,
-    'Derince': 5,
-    'Dilovası': 10,
-    'Gebze': 5,
-    'Gölcük': 5,
-    'Kandıra': 5,
-    'Karamürsel': 5,
-    'Kartepe': 10,
-    'Körfez': 5,
-    'İzmit': 15,
-}
+seed(datetime.now())
 
 NEW_BUS_COST = 50  # Yeni otobüs maliyeti (25 kapasite)
 NEW_BUS_CAPACITY = 25
-MISSING_PASSENGER_PUNISHMENT = 15
-CURRENT_SENARYO = senaryo1
-buses = [25, 30, 40]  # Güncel otobüsler ve yolcu sayıları
-BASE_COST = 0
 
-# Eğer yolcu sayısı kapasiteden fazla ise otomatik servis alınır
-PASSENGER_COUNT = sum(CURRENT_SENARYO.values())
-while sum(buses) < PASSENGER_COUNT:
-    buses.append(NEW_BUS_CAPACITY)
-    BASE_COST += NEW_BUS_COST
+senaryo1 = {
+    'scenario':{
+        'Başiskele': 10,
+        'Darıca': 19,
+        'Derince': 5,
+        'Dilovası': 9,
+        'Gebze': 4,
+        'Gölcük': 4,
+        'Kandıra': 5,
+        'Karamürsel': 5,
+        'Kartepe': 10,
+        'Körfez': 5,
+        'İzmit': 15,
+    },
+    'users' : {
+        'Test1':'Gebze',
+        'Test2':'Darıca',
+        'Test3':'Dilovası',
+        'Test4':'Gölcük',
+    }
+    }
+
 
 # belki aksiyonlar yapıp örnek: yeni araba al, araba 1 şuraya gitsin şu kadar kişi alsın araba 2 şuraya gitsin
 Distances = {
@@ -262,12 +261,12 @@ Action = namedtuple('Action', ['city1', 'pickup']) # geldiği şehir, gittiği �
 # pprint.pprint(generate_genome(senaryo1, 25))
 
 class DNA:
-    def __init__(self, senaryo: dict) -> None:
+    def __init__(self, senaryo: dict, BASE_COST, buses, passenger_count) -> None:
         self.genome = []  # length burada gidilecek durak sayısı
         self.unfitness= 0
         self.base_unfitness = BASE_COST # Sabit maliyet (ör: yeni bir otobüs alınırsa sabit 50 maliyet)
         self.senaryo = copy.deepcopy(senaryo)
-
+        self.PASSENGER_COUNT = passenger_count
         # Default Genomeları oluştur
         for capacity in buses:
             self.genome.append(self.generate_genome(capacity))
@@ -282,13 +281,13 @@ class DNA:
                 uf += distance_api(action.city1, "Son" if i == m-1 else route[i+1].city1)
                 pc += action.pickup
 
-        self.unfitness = self.base_unfitness + uf + ((PASSENGER_COUNT - pc) * MISSING_PASSENGER_PUNISHMENT)
+        self.unfitness = self.base_unfitness + uf + ((self.PASSENGER_COUNT - pc) * 15)
 
     def generate_genome(self, bus_capacity: int):
         genome = []
         senaryo = self.senaryo
         cities = list(senaryo.keys())
-        city1 = choice(cities)        
+        city1 = choice(cities)
         while city1 == "Son":
             city1 = choice(cities)
     
@@ -333,10 +332,6 @@ class DNA:
         #         genome.remove(action)
 
         return genome
-
-    def add_new_bus(self) -> None:
-        self.base_unfitness += NEW_BUS_COST
-        self.genome.append(self.generate_genome(NEW_BUS_CAPACITY))
 
     def print_information(self):
         self.calculate_unfitness()
@@ -390,12 +385,28 @@ class DNA:
 # result.print_information()
 
 class Population:
-    def __init__(self, count) -> None:
+    def __init__(self, count, senaryo) -> None:
+        CURRENT_SENARYO = senaryo
+        owned_buses = [25, 30, 40]  # Güncel otobüsler ve yolcu sayıları
+        buses = []
+        BASE_COST = 0
+
+        # Eğer yolcu sayısı kapasiteden fazla ise otomatik servis alınır
+        PASSENGER_COUNT = sum(CURRENT_SENARYO.values())
+        while sum(buses) < PASSENGER_COUNT:
+            
+            if(len(owned_buses) > 0):
+                buses.append(owned_buses.pop())
+            else:
+                buses.append(NEW_BUS_CAPACITY)
+                BASE_COST += NEW_BUS_COST
+
+        print(buses)
         self.population = []
         self.best = None
         self.overall_best = None
-        for i in range(count):
-            self.population.append(DNA(CURRENT_SENARYO))
+        for _ in range(count):
+            self.population.append(DNA(CURRENT_SENARYO, BASE_COST, buses, PASSENGER_COUNT))
 
         self.population_size = count
         
@@ -441,13 +452,24 @@ class Population:
         else:
             return self.overall_best
 
-def solve(senaryo=senaryo1):
-    CURRENT_SENARYO = senaryo
-    p = Population(500)
+def solve(senaryo:dict):
+
+    users = senaryo['users']
+    senaryo = senaryo['scenario']
+
+    for v in users.values():
+         senaryo[v] += 1
+
+    senaryo = {k: v for k, v in senaryo.items() if v!=0}
+
+
+    p = Population(500, senaryo)
     p.get_best().print_information()
     p.loop(100)
     p.get_best().print_information()
+    pprint.pprint(p.get_best().turn_to_json())
     return p.get_best()
+
 
 import flask
 from flask import request, jsonify
@@ -457,9 +479,21 @@ app.config["DEBUG"] = True
 
 @app.route('/api/v1/route', methods=['GET','POST'])
 def route_api():
+    
     senaryo = request.get_json(force=True)
-    sonuc = solve(senaryo)
-    return jsonify(sonuc.turn_to_json())
+    users = senaryo['users']
+    sonuc = solve(senaryo).turn_to_json()
+    sonuc['users'] = {}
+
+    for k,v in users.items():
+        for k2,v2 in sonuc.items():
+            if "bus" in k2:
+                for _,v3 in v2.items():
+                    if v == v3['route']:
+                        sonuc['users'][k] = k2
+                        
+    
+    return jsonify(sonuc)
 
 if __name__ == '__main__':
     app.run(port=1234)

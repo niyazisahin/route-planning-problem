@@ -11,6 +11,9 @@ import Admin_index from './screens/Admin_index.js';
 import User_index from './screens/User_index.js';
 import Map from './screens/Map.js';
 import Admin_rota_ekle from './screens/Admin_rota_ekle.js'
+import Admin_istatistik from './screens/Admin_istatistik.js';
+import User_transition from './screens/User_transition.js';
+
 
 
 export default function App() {
@@ -26,6 +29,9 @@ export default function App() {
         <Stack.Screen name="User_index" options={{ title: "Kullanıcı Paneli" }} component={User_index} />
         <Stack.Screen name="Map" component={Map} />      
         <Stack.Screen name="Admin_rota_ekle" component={Admin_rota_ekle} />  
+        <Stack.Screen name="Admin_istatistik" component={Admin_istatistik} />  
+        <Stack.Screen name="User_transition" component={User_transition} />  
+        
       </Stack.Navigator>
     </NavigationContainer>
   )
