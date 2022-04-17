@@ -7,30 +7,32 @@ import { FontAwesome5 } from "@expo/vector-icons";
 
 const { width, height } = Dimensions.get("screen");
 var flag = true
+var markers = []
+export default function User_index({ route }) {
 
-const App = (props) => {
   const town = {
-    "Karamürsel": { "lat": "40.68887078717858", "long:": "29.616460427621444" },
-    "Çayırova": { "lat": "40.83247607410527", "long:": "29.3916387515728" },
-    "Gebze": { "lat": "40.80489597012795", "long:": "29.434795581449425" },
-    "Darıca": { "lat": "40.77844941736837", "long:": "29.372150040156498" },
-    "Körfez": { "lat": "40.76187693538016", "long:": "29.771523835649422" },
-    "İzmit": { "lat": "40.76337942504672", "long:": "29.899703036762144" },
-    "Gölcük": { "lat": "40.70215906431384", "long:": "29.829563491666576" },
-    "Kandıra": { "lat": "41.06808603122199", "long:": "30.154684783852524" },
-    "Başiskele": { "lat": "40.699351635371485", "long:": "29.937371996855372" },
-    "Derince": { "lat": "40.76029756226806", "long:": "29.823696384311056" },
-    "Dilovası": { "lat": "40.78830652211365", "long:": "29.542081745773146" },
-    "Kartepe": { "lat": "40.753021482273354", "long:": "30.019990361474314" },
-    "Son": { "lat": "40.824576626282806", "long:": "29.919917521422583" },
+    
+    "Karamürsel": { "latitude": "40.68887078717858", "longitude:": "29.616460427621444" },
+    "Çayırova": { "latitude": 40.83247607410527, "longitude:": 29.3916387515728 },
+    "Gebze": { "latitude": "40.80489597012795", "longitude:": "29.434795581449425" },
+    "Darıca": { "latitude": "40.77844941736837", "longitude:": "29.372150040156498" },
+    "Körfez": { "latitude": "40.76187693538016", "longitude:": "29.771523835649422" },
+    "İzmit": { "latitude": "40.76337942504672", "longitude:": "29.899703036762144" },
+    "Gölcük": { "latitude": "40.70215906431384", "longitude:": "29.829563491666576" },
+    "Kandıra": { "latitude": "41.06808603122199", "longitude:": "30.154684783852524" },
+    "Başiskele": { "latitude": "40.699351635371485", "longitude:": "29.937371996855372" },
+    "Derince": { "latitude": "40.76029756226806", "longitude:": "29.823696384311056" },
+    "Dilovası": { "latitude": "40.78830652211365", "longitude:": "29.542081745773146" },
+    "Kartepe": { "latitude": "40.753021482273354", "longitude:": "30.019990361474314" },
+    "Son": { "latitude": "40.824576626282806", "longitude:": "29.919917521422583" },
 
   }
   const { width, height } = Dimensions.get("screen");
   const [post, setPost] = React.useState({
     data: {}
   })
-  
-  if(flag == true){
+
+  if (flag == true) {
     fetch('http://127.0.0.1:5000/api/v5/', {
       method: 'POST',
       headers: {
@@ -41,53 +43,33 @@ const App = (props) => {
       .then(response => (
         response.json())
       ).then(data => {
-  
+
         tmp = {}
-  
-        var dict = data["path"].bus0
-  
+        var bus = data["path"]["users"][route.params.content.username]
+        var dict = data["path"][bus]
+
         setPost({ ...post, data: dict })
-        alert(JSON.stringify(dict))
+
+        
       })
-      flag = false
+    flag = false
   }
-
-
 
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [mapRegion, setMapRegion] = useState(null);
-  const [friends] = useState([
-    {
-      username: "bob",
-      description: "school friend",
-      icon: "dog",
-      location: {
-        longitude: "77.3",
-        latitude: "32.5"
-      }
-    },
-    {
-      username: "Alex",
-      description: "Childhood friend",
-      icon: "dragon",
-      location: {
-        longitude: "78.3",
-        latitude: "32.8"
-      }
-    },
-    {
-      username: "Jack",
-      description: "Business Partner",
-      icon: "dove",
-      location: {
-        longitude: "77.7",
-        latitude: "32.1"
-      }
-    }
-  ]);
 
-  useEffect(() => {
+  
+
+    for (const [key, value] of Object.entries(post.data)) {
+    markers.push({ "username": key, icon:"dragon" , "location": town[value.route] })
+  }
+  alert(JSON.stringify(markers[0]))
+
+  const [friends] = useState(markers);
+
+
+/*   useEffect(() => {
     (async () => {
       let { status } = await Location.requestBackgroundPermissionsAsync();
       if (status !== "granted") {
@@ -105,48 +87,21 @@ const App = (props) => {
       });
     })();
   }, []);
-
+ */
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <MapView
-        initialRegion={mapRegion}
         mapType="terrain"
         style={styles.mapView}
       >
-        {mapRegion ? (
-          <Circle
-            center={{
-              longitude: mapRegion.longitude,
-              latitude: mapRegion.latitude
-            }}
-            radius={1000}
-            strokeColor="transparent"
-            fillColor="rgba(255,0,0,0.3)"
-          ></Circle>
-        ) : null}
-        {mapRegion ? (
-          <Marker
-            coordinate={{
-              longitude: mapRegion.longitude,
-              latitude: mapRegion.latitude
-            }}
-            title="Me"
-            description="Myself"
-          >
-            <View style={styles.circle}>
-              <View style={styles.core} />
-              <View style={styles.stroke} />
-            </View>
-          </Marker>
-        ) : null}
 
         {friends
           ? friends.map((friend) => (
             <Marker
               coordinate={friend.location}
               title={friend.username}
-              description={friend.description}
+              
             >
               <FontAwesome5
                 name={friend.icon}
@@ -201,5 +156,3 @@ const styles = StyleSheet.create({
     zIndex: 2
   }
 });
-
-export default App;
