@@ -45,7 +45,7 @@ export default function Admin_index({ route }) {
         <Text >Yeni Rota Ekle</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.istatistik} onPress={() => navigation.navigate('Admin_istatistik')}>
-        <Text >İstatistikler</Text>
+        <Text >Harita</Text>
       </TouchableOpacity>
 
     </View>

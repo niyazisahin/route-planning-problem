@@ -140,7 +140,7 @@ export default function Start({ route }) {
               })
           }
       } } >
-        <Text >{route.params.content.username}</Text>
+        <Text >Lokasyonu Ekle</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.admin} onPress={() => navigation.navigate('User_index', {content:{username :route.params.content.username}})}>

@@ -12,19 +12,19 @@ export default function User_index({ route }) {
 
   const town = {
     
-    "Karamürsel": { "latitude": "40.68887078717858", "longitude:": "29.616460427621444" },
-    "Çayırova": { "latitude": 40.83247607410527, "longitude:": 29.3916387515728 },
-    "Gebze": { "latitude": "40.80489597012795", "longitude:": "29.434795581449425" },
-    "Darıca": { "latitude": "40.77844941736837", "longitude:": "29.372150040156498" },
-    "Körfez": { "latitude": "40.76187693538016", "longitude:": "29.771523835649422" },
-    "İzmit": { "latitude": "40.76337942504672", "longitude:": "29.899703036762144" },
-    "Gölcük": { "latitude": "40.70215906431384", "longitude:": "29.829563491666576" },
-    "Kandıra": { "latitude": "41.06808603122199", "longitude:": "30.154684783852524" },
-    "Başiskele": { "latitude": "40.699351635371485", "longitude:": "29.937371996855372" },
-    "Derince": { "latitude": "40.76029756226806", "longitude:": "29.823696384311056" },
-    "Dilovası": { "latitude": "40.78830652211365", "longitude:": "29.542081745773146" },
-    "Kartepe": { "latitude": "40.753021482273354", "longitude:": "30.019990361474314" },
-    "Son": { "latitude": "40.824576626282806", "longitude:": "29.919917521422583" },
+    "Karamürsel": { latitude: 40.68887078717858, longitude: 29.616460427621444 },
+    "Çayırova": { latitude: 40.83247607410527, longitude: 29.3916387515728 },
+    "Gebze": { latitude: 40.80489597012795, longitude: 29.434795581449425 },
+    "Darıca": { latitude: 40.77844941736837, longitude: 29.372150040156498 },
+    "Körfez": { latitude: 40.76187693538016, longitude: 29.771523835649422 },
+    "İzmit": { latitude: 40.76337942504672, longitude: 29.899703036762144 },
+    "Gölcük": { latitude: 40.70215906431384, longitude: 29.829563491666576 },
+    "Kandıra": { latitude: 41.06808603122199, longitude: 30.154684783852524 },
+    "Başiskele": { latitude: 40.699351635371485, longitude: 29.937371996855372 },
+    "Derince": { latitude: 40.76029756226806, longitude: 29.823696384311056 },
+    "Dilovası": { latitude: 40.78830652211365, longitude: 29.542081745773146 },
+    "Kartepe": { latitude: 40.753021482273354, longitude: 30.019990361474314 },
+    "Son": { latitude: 40.824576626282806, longitude: 29.919917521422583 },
 
   }
   const { width, height } = Dimensions.get("screen");
@@ -59,68 +59,63 @@ export default function User_index({ route }) {
   const [errorMsg, setErrorMsg] = useState(null);
   const [mapRegion, setMapRegion] = useState(null);
 
+  const [region, setRegion] = useState({
+    latitude: 51.5079145,
+    longitude: -0.0899163,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  });
+
+  const tokyoRegion = {
+    latitude: 40.76,
+    longitude: 29.89,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  };
   
-
     for (const [key, value] of Object.entries(post.data)) {
-    markers.push({ "username": key, icon:"dragon" , "location": town[value.route] })
-  }
-  alert(JSON.stringify(markers[0]))
 
+      var loc = town[value.route]
+
+      loc.latitudeDelta = 0.01
+      loc.longitudeDelta = 0.01
+
+      markers.push({ "username": key, icon:"dragon" , "location": loc })
+  }
+ 
   const [friends] = useState(markers);
 
+return (
+  <View style={styles.container}>
+    <MapView
+      style={styles.map}
+      initialRegion={tokyoRegion}
+      
+      onRegionChangeComplete={(region) => setRegion(region)}
+      
+    >
+       <Marker coordinate={tokyoRegion} />
 
-/*   useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestBackgroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-      }
-
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-
-      setMapRegion({
-        longitude: location.coords.longitude,
-        latitude: location.coords.latitude,
-        longitudeDelta: 0.0922,
-        latitudeDelta: 0.0421
-      });
-    })();
-  }, []);
- */
-  return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <MapView
-        mapType="terrain"
-        style={styles.mapView}
-      >
-
-        {friends
-          ? friends.map((friend) => (
-            <Marker
-              coordinate={friend.location}
-              title={friend.username}
-              
-            >
-              <FontAwesome5
-                name={friend.icon}
-                size={26}
-                style={{ color: "red" }}
-              />
-            </Marker>
-          ))
-          : null}
-      </MapView>
-    </View>
-  );
+       {friends.map((value, index) => {
+        return <Marker coordinate={value.location} title={value.username} />
+      })}
+    </MapView>
+    
+    <Text style={styles.text}>Current latitude: {region.latitude}</Text>
+    <Text style={styles.text}>Current longitude: {region.longitude}</Text>
+  </View>
+);
 };
-
 const styles = StyleSheet.create({
+
   container: {
-    backgroundColor: "#fff",
-    width,
-    height
+    ...StyleSheet.absoluteFillObject,
+    flex: 1, 
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
   },
   mapView: {
     position: "absolute",
